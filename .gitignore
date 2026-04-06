@@ -1,0 +1,30 @@
+# Ignore everything by default except the theme we want to track
+/*
+!.gitignore
+!wp-content/
+wp-content/*
+!wp-content/themes/
+!wp-content/themes/maxus/
+!wp-content/themes/maxus/**
+
+# Keep WordPress core and uploads out of the repo
+wp-config.php
+
+/wp-admin/
+/wp-includes/
+
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backups/
+wp-content/uploads/
+
+wp-content/plugins/
+wp-content/themes/*
+!wp-content/themes/maxus/
+
+*.log
+*.sql
+.DS_Store
+Thumbs.db
+/license.txt
+/readme.html
