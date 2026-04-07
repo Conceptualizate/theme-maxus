@@ -1,30 +1,28 @@
-# Ignore everything by default except the theme we want to track
+# Ignore everything by default
 /*
+
+# Keep repo metadata/docs
 !.gitignore
+!README.md
+
+# Allow wp-content tree, then re-ignore everything inside
 !wp-content/
 wp-content/*
+
+# Track only the custom theme
 !wp-content/themes/
+wp-content/themes/*
 !wp-content/themes/maxus/
 !wp-content/themes/maxus/**
 
-# Keep WordPress core and uploads out of the repo
-wp-config.php
+# Track only the custom plugin
+!wp-content/plugins/
+wp-content/plugins/*
+!wp-content/plugins/maxus-post-types/
+!wp-content/plugins/maxus-post-types/**
 
-/wp-admin/
-/wp-includes/
-
-wp-content/cache/
-wp-content/upgrade/
-wp-content/backups/
-wp-content/uploads/
-
-wp-content/plugins/
-wp-content/themes/*
-!wp-content/themes/maxus/
-
+# Optional local noise
 *.log
 *.sql
 .DS_Store
 Thumbs.db
-/license.txt
-/readme.html
