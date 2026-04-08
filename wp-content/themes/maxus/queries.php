@@ -1,5 +1,31 @@
 <?php
 
+if (!function_exists('maxus_get_site_options')) {
+    function maxus_get_site_options()
+    {
+        static $options = null;
+
+        if ($options !== null) {
+            return $options;
+        }
+
+        $get = function_exists('get_field') ? 'get_field' : null;
+
+        $options = array(
+            'phone'     => $get ? $get('phone', 'option') : '',
+            'email'     => $get ? $get('email', 'option') : '',
+            'address'   => $get ? $get('address', 'option') : '',
+            'facebook'  => $get ? $get('facebook_url', 'option') : '',
+            'instagram' => $get ? $get('instagram_url', 'option') : '',
+            'whatsapp'  => $get ? $get('whatsapp_url', 'option') : '',
+            'slogan'    => $get ? $get('slogan', 'option') : '',
+            'schedule'  => $get ? $get('schedule', 'option') : '',
+        );
+
+        return $options;
+    }
+}
+
 if (!function_exists('maxus_get_hero_slides')) {
     function maxus_get_hero_slides()
     {

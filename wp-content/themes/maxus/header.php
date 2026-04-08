@@ -12,13 +12,14 @@
 </head>
 
 <?php
-// ACF Page Options
-$phone     = get_field('phone', 'option');
-$email     = get_field('email', 'option');
-$address   = get_field('address', 'option');
-$facebook  = get_field('facebook_url', 'option');
-$instagram = get_field('instagram_url', 'option');
-$slogan    = get_field('slogan', 'option');
+$opts      = maxus_get_site_options();
+$phone     = $opts['phone'];
+$email     = $opts['email'];
+$address   = $opts['address'];
+$facebook  = $opts['facebook'];
+$instagram = $opts['instagram'];
+$whatsapp  = $opts['whatsapp'];
+$slogan    = $opts['slogan'];
 ?>
 
 <body <?php body_class(); ?>>
@@ -120,16 +121,7 @@ $slogan    = get_field('slogan', 'option');
 
             <div class="mobile-menu__footer">
                 <div class="mobile-menu__social">
-                    <?php if ($facebook) : ?>
-                        <a href="<?php echo esc_url($facebook); ?>" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                            <i class="ri-facebook-fill"></i>
-                        </a>
-                    <?php endif; ?>
-                    <?php if ($instagram) : ?>
-                        <a href="<?php echo esc_url($instagram); ?>" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                            <i class="ri-instagram-fill"></i>
-                        </a>
-                    <?php endif; ?>
+                    <?php get_template_part('template-parts/social-links'); ?>
                 </div>
 
 
