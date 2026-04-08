@@ -172,7 +172,7 @@ function maxus_servicio_post_type()
         'label'               => __('Servicios', 'maxus-post-types'),
         'description'         => __('Servicios ofrecidos por Maxus Noack.', 'maxus-post-types'),
         'labels'              => $labels,
-        'supports'            => array('title', 'thumbnail'),
+        'supports'            => array('title'),
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,

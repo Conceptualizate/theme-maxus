@@ -133,3 +133,46 @@ if (!function_exists('maxus_get_model_categories')) {
         return $categories;
     }
 }
+
+if (!function_exists('maxus_get_services')) {
+    function maxus_get_services()
+    {
+        if (!post_type_exists('servicio')) {
+            return array();
+        }
+
+        $args = array(
+            'post_type'      => 'servicio',
+            'post_status'    => 'publish',
+            'posts_per_page' => -1,
+            'orderby'        => array(
+                'menu_order' => 'ASC',
+                'date'       => 'DESC',
+            ),
+        );
+
+        $query = new WP_Query($args);
+
+        if (!$query->have_posts()) {
+            return array();
+        }
+
+        $services = array();
+
+        while ($query->have_posts()) {
+            $query->the_post();
+            $id = get_the_ID();
+
+            $services[] = array(
+                'id'          => $id,
+                'title'       => get_the_title($id),
+                'icon'        => function_exists('get_field') ? get_field('icon', $id) : '',
+                'description' => function_exists('get_field') ? get_field('description', $id) : '',
+            );
+        }
+
+        wp_reset_postdata();
+
+        return $services;
+    }
+}
