@@ -30,17 +30,40 @@ add_action('after_setup_theme', 'maxus_setup');
 // Enqueue scripts and styles
 function maxus_scripts()
 {
+    // --- Styles ---
+
+    // Normalize: CSS reset
     wp_enqueue_style('normalize', 'https://necolas.github.io/normalize.css/8.0.1/normalize.css', array(), '8.0.1');
+
+    // Theme styles (depends on normalize)
     $css_path = get_stylesheet_directory() . '/style.css';
     $css_version = file_exists($css_path) ? filemtime($css_path) : '1.0.0';
     wp_enqueue_style('maxus-styles', get_stylesheet_uri(), array('normalize'), $css_version);
+
+    // Swiper: slider styles
     wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css', array(), '12.1.3');
+
+    // --- Scripts ---
+
+    // Swiper: slider engine
     wp_enqueue_script('swiperjs', 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js', array(), '12.1.3', true);
+
+    // GSAP: animation core
     wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js', array(), '3.14.2', true);
-    // Use file modification time for script version as well
+
+    // GSAP SplitText: text split animation (depends on GSAP)
+    wp_enqueue_script('gsap-split-text', 'https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js', array('gsap'), '3.14.2', true);
+
+    // Theme JS (depends on Swiper, GSAP, SplitText)
     $js_path = get_stylesheet_directory() . '/js/main.js';
     $js_version = file_exists($js_path) ? filemtime($js_path) : '1.0.0';
-    wp_enqueue_script('maxus-scripts', get_stylesheet_directory_uri() . '/js/main.js', array('swiperjs', 'gsap'), $js_version, true);
+    wp_enqueue_script(
+        'maxus-scripts',
+        get_stylesheet_directory_uri() . '/js/main.js',
+        array('swiperjs', 'gsap', 'gsap-split-text'),
+        $js_version,
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'maxus_scripts');
 

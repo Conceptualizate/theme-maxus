@@ -1,8 +1,11 @@
 <?php
 get_header();
 ?>
-<main class="container">
-    <?php get_template_part('template-parts/page-loop') ?>
+
+<?php get_template_part('template-parts/hero'); ?>
+
+
+<main class="front-page-content">
 </main>
 
 <?php
