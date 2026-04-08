@@ -54,13 +54,16 @@ function maxus_scripts()
     // GSAP SplitText: text split animation (depends on GSAP)
     wp_enqueue_script('gsap-split-text', 'https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js', array('gsap'), '3.14.2', true);
 
+    // GSAP ScrollTrigger: scroll-based animations (depends on GSAP)
+    wp_enqueue_script('gsap-scroll-trigger', 'https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js', array('gsap'), '3.14.2', true);
+
     // Theme JS (depends on Swiper, GSAP, SplitText)
     $js_path = get_stylesheet_directory() . '/js/main.js';
     $js_version = file_exists($js_path) ? filemtime($js_path) : '1.0.0';
     wp_enqueue_script(
         'maxus-scripts',
         get_stylesheet_directory_uri() . '/js/main.js',
-        array('swiperjs', 'gsap', 'gsap-split-text'),
+        array('swiperjs', 'gsap', 'gsap-split-text', 'gsap-scroll-trigger'),
         $js_version,
         true
     );

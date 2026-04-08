@@ -132,6 +132,68 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==============================
+  // Models Filter
+  // ==============================
+
+  const filterBtns = document.querySelectorAll(".js-model-filter");
+  const modelCards = document.querySelectorAll(".js-model-card");
+
+  if (filterBtns.length && modelCards.length && typeof gsap !== "undefined") {
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.dataset.filter;
+
+        // Toggle active class
+        filterBtns.forEach((b) => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+
+        // Determine which cards match
+        const show = [];
+        const hide = [];
+
+        modelCards.forEach((card) => {
+          if (filter === "all" || card.dataset.category === filter) {
+            show.push(card);
+          } else {
+            hide.push(card);
+          }
+        });
+
+        // Animate out non-matching cards, then show matching
+        const tl = gsap.timeline();
+
+        if (hide.length) {
+          tl.to(hide, {
+            opacity: 0,
+            scale: 0.92,
+            duration: 0.3,
+            stagger: 0.04,
+            ease: "power2.in",
+            onComplete() {
+              hide.forEach((c) => (c.style.display = "none"));
+            },
+          });
+        }
+
+        tl.call(() => {
+          show.forEach((c) => {
+            c.style.display = "";
+            gsap.set(c, { opacity: 0, scale: 0.92 });
+          });
+        });
+
+        tl.to(show, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.4,
+          stagger: 0.06,
+          ease: "power2.out",
+        });
+      });
+    });
+  }
+
+  // ==============================
   // Scroll to Top
   // ==============================
 
@@ -151,6 +213,90 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollTopBtn.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+  }
+
+  // ==============================
+  // Scroll Entrance Animations
+  // ==============================
+
+  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const from = { y: 30, autoAlpha: 0 };
+    const to   = { y: 0, autoAlpha: 1, ease: "power2.out" };
+    const triggerDefaults = { start: "top 85%", once: true };
+
+    // — Helper: animate a section header (eyebrow + title + optional description)
+    function animateHeader(selector) {
+      const header = document.querySelector(selector);
+      if (!header) return;
+      gsap.fromTo(header.children, { ...from }, {
+        ...to,
+        duration: 0.6,
+        stagger: 0.12,
+        scrollTrigger: { trigger: header, ...triggerDefaults },
+      });
+    }
+
+    // — Categories
+    animateHeader(".categories__header");
+
+    const catCards = document.querySelectorAll(".category-card");
+    if (catCards.length) {
+      gsap.fromTo(catCards, { ...from }, {
+        ...to,
+        duration: 0.5,
+        stagger: 0.1,
+        scrollTrigger: { trigger: ".categories__grid", ...triggerDefaults },
+      });
+    }
+
+    // — Models
+    animateHeader(".models__header");
+
+    const modelsFilters = document.querySelector(".models__filters");
+    if (modelsFilters) {
+      gsap.fromTo(modelsFilters.children,
+        { autoAlpha: 0, y: 12 },
+        { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.06, ease: "power2.out",
+          scrollTrigger: { trigger: modelsFilters, ...triggerDefaults },
+        }
+      );
+    }
+
+    const modelsGrid = document.querySelector(".js-models-grid");
+    if (modelsGrid) {
+      gsap.fromTo(modelsGrid.querySelectorAll(".js-model-card"), { ...from }, {
+        ...to,
+        duration: 0.5,
+        stagger: 0.08,
+        scrollTrigger: { trigger: modelsGrid, ...triggerDefaults },
+      });
+    }
+
+    // — Services
+    animateHeader(".services__header");
+
+    const serviceCards = document.querySelectorAll(".service-card");
+    if (serviceCards.length) {
+      gsap.fromTo(serviceCards, { ...from }, {
+        ...to,
+        duration: 0.5,
+        stagger: 0.12,
+        scrollTrigger: { trigger: ".services__grid", ...triggerDefaults },
+      });
+    }
+
+    // — CTA
+    const ctaCard = document.querySelector(".cta__card");
+    if (ctaCard) {
+      gsap.fromTo(ctaCard,
+        { y: 40, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, ease: "power2.out",
+          scrollTrigger: { trigger: ".cta", ...triggerDefaults },
+        }
+      );
+    }
   }
 
 });

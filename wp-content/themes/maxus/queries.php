@@ -176,3 +176,57 @@ if (!function_exists('maxus_get_services')) {
         return $services;
     }
 }
+
+if (!function_exists('maxus_get_models')) {
+    function maxus_get_models()
+    {
+        if (!post_type_exists('modelo')) {
+            return array();
+        }
+
+        $args = array(
+            'post_type'      => 'modelo',
+            'post_status'    => 'publish',
+            'posts_per_page' => -1,
+            'orderby'        => array(
+                'menu_order' => 'ASC',
+                'date'       => 'DESC',
+            ),
+        );
+
+        $query = new WP_Query($args);
+
+        if (!$query->have_posts()) {
+            return array();
+        }
+
+        $models = array();
+
+        while ($query->have_posts()) {
+            $query->the_post();
+            $id = get_the_ID();
+
+            $terms     = get_the_terms($id, 'categoria_modelo');
+            $cat_name  = (!empty($terms) && !is_wp_error($terms)) ? $terms[0]->name : '';
+            $cat_slug  = (!empty($terms) && !is_wp_error($terms)) ? $terms[0]->slug : '';
+            $image_url = get_the_post_thumbnail_url($id, 'large') ?: '';
+
+            $models[] = array(
+                'id'           => $id,
+                'title'        => get_the_title($id),
+                'image_url'    => $image_url,
+                'category'     => $cat_name,
+                'category_slug' => $cat_slug,
+                'engine'       => function_exists('get_field') ? get_field('engine', $id) : '',
+                'transmision'  => function_exists('get_field') ? get_field('transmision', $id) : '',
+                'featured'     => function_exists('get_field') ? get_field('featured', $id) : '',
+                'price_from'   => function_exists('get_field') ? get_field('price_from', $id) : '',
+                'permalink'    => get_permalink($id),
+            );
+        }
+
+        wp_reset_postdata();
+
+        return $models;
+    }
+}

@@ -7,6 +7,7 @@ get_header();
 
 <main class="front-page-content">
     <?php get_template_part('template-parts/categories'); ?>
+    <?php get_template_part('template-parts/models'); ?>
     <?php get_template_part('template-parts/services'); ?>
     <?php get_template_part('template-parts/cta'); ?>
 </main>
