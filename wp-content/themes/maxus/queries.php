@@ -62,3 +62,40 @@ if (!function_exists('maxus_get_hero_slides')) {
         return $slides;
     }
 }
+
+if (!function_exists('maxus_get_model_categories')) {
+    function maxus_get_model_categories()
+    {
+        if (!taxonomy_exists('categoria_modelo')) {
+            return array();
+        }
+
+        $terms = get_terms(array(
+            'taxonomy'   => 'categoria_modelo',
+            'hide_empty' => false,
+            'orderby'    => 'name',
+            'order'      => 'ASC',
+        ));
+
+        if (is_wp_error($terms) || empty($terms)) {
+            return array();
+        }
+
+        $categories = array();
+
+        foreach ($terms as $term) {
+            $cover = function_exists('get_field') ? get_field('cover_image', $term) : null;
+
+            $categories[] = array(
+                'id'          => $term->term_id,
+                'name'        => $term->name,
+                'slug'        => $term->slug,
+                'description' => function_exists('get_field') ? get_field('short_description', $term) : '',
+                'cover_url'   => !empty($cover['url']) ? $cover['url'] : '',
+                'link'        => get_term_link($term),
+            );
+        }
+
+        return $categories;
+    }
+}
