@@ -131,4 +131,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ==============================
+  // Scroll to Top
+  // ==============================
+
+  const scrollTopBtn = document.querySelector(".js-scroll-top");
+
+  if (scrollTopBtn) {
+    const SCROLL_THRESHOLD = 400;
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > SCROLL_THRESHOLD) {
+        scrollTopBtn.classList.add("is-visible");
+      } else {
+        scrollTopBtn.classList.remove("is-visible");
+      }
+    }, { passive: true });
+
+    scrollTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
 });

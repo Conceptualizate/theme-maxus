@@ -12,14 +12,22 @@ if (!function_exists('maxus_get_site_options')) {
         $get = function_exists('get_field') ? 'get_field' : null;
 
         $options = array(
-            'phone'     => $get ? $get('phone', 'option') : '',
-            'email'     => $get ? $get('email', 'option') : '',
-            'address'   => $get ? $get('address', 'option') : '',
-            'facebook'  => $get ? $get('facebook_url', 'option') : '',
-            'instagram' => $get ? $get('instagram_url', 'option') : '',
-            'whatsapp'  => $get ? $get('whatsapp_url', 'option') : '',
-            'slogan'    => $get ? $get('slogan', 'option') : '',
-            'schedule'  => $get ? $get('schedule', 'option') : '',
+            'phone'         => $get ? $get('phone', 'option') : '',
+            'email'         => $get ? $get('email', 'option') : '',
+            'address'       => $get ? $get('address', 'option') : '',
+            'facebook'      => $get ? $get('facebook_url', 'option') : '',
+            'instagram'     => $get ? $get('instagram_url', 'option') : '',
+            'whatsapp'      => $get ? $get('whatsapp_url', 'option') : '',
+            'slogan'        => $get ? $get('slogan', 'option') : '',
+            'schedule'      => $get ? $get('schedule', 'option') : '',
+            'cta_eyebrow'   => $get ? $get('cta_eyebrow', 'option') : '',
+            'cta_title'     => $get ? $get('cta_title', 'option') : '',
+            'cta_highlight' => $get ? $get('cta_highlight', 'option') : '',
+            'cta_description' => $get ? $get('cta_description', 'option') : '',
+            'cta_1_text'    => $get ? $get('cta_1_text', 'option') : '',
+            'cta_1_url'     => $get ? $get('cta_1_url', 'option') : '',
+            'cta_2_text'    => $get ? $get('cta_2_text', 'option') : '',
+            'cta_2_url'     => $get ? $get('cta_2_url', 'option') : '',
         );
 
         return $options;

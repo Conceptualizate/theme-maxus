@@ -83,6 +83,10 @@ $schedule  = $opts['schedule'];
     </div>
 </footer>
 
+<button class="scroll-top js-scroll-top" type="button" aria-label="Volver arriba">
+    <i class="ri-arrow-up-line"></i>
+</button>
+
 <?php wp_footer(); ?>
 </body>
 </html>
